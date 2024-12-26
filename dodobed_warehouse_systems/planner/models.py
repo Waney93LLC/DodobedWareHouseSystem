@@ -44,7 +44,6 @@ class ProductLine(models.Model):
         return self.name
     
 class Product(models.Model):
-    product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     product_internal_name = models.CharField(max_length=100)
@@ -60,7 +59,6 @@ class Product(models.Model):
         return self.product_name
 
 class Order(models.Model):
-    order_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_status = models.CharField(max_length=100)
     order_date = models.DateField()
@@ -71,7 +69,6 @@ class Order(models.Model):
         return self.order_id
 
 class OrderItem(models.Model):
-    order_item_id = models.AutoField(primary_key=True)
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
@@ -81,7 +78,6 @@ class OrderItem(models.Model):
         return self.order_item_id
 
 class Inventory(models.Model):
-    inventory_id = models.AutoField(primary_key=True)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     available_quantity = models.IntegerField()
     reorder_level = models.IntegerField()
@@ -91,7 +87,6 @@ class Inventory(models.Model):
         return self.inventory_id
 
 class Workflow(models.Model):
-    workflow_id = models.AutoField(primary_key=True)
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
     status = models.CharField(max_length=100)
     created_date = models.DateField()
@@ -101,7 +96,6 @@ class Workflow(models.Model):
         return self.workflow_id
 
 class Workload(models.Model):
-    workload_id = models.AutoField(primary_key=True)
     workflow_id = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     assigned_to = models.CharField(max_length=100)
     task_description = models.TextField()
@@ -112,7 +106,6 @@ class Workload(models.Model):
         return self.workload_id
 
 class PlannerEscalation(models.Model):
-    escalation_id = models.AutoField(primary_key=True)
     inventory_id = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     shortage_quantity = models.IntegerField()
     escalation_status = models.CharField(max_length=100)
@@ -133,7 +126,6 @@ class Customer(models.Model):
 
 
 class Supplier(models.Model):
-    supplier_id = models.AutoField(primary_key=True)
     supplier_name = models.CharField(max_length=100)
     contact_information = models.TextField()
     material_type = models.ForeignKey(Material, on_delete=models.CASCADE)
@@ -143,7 +135,6 @@ class Supplier(models.Model):
 
     
 class Dashboard(models.Model):
-    dashboard_id = models.AutoField(primary_key=True)
     planner = models.ForeignKey(User, on_delete=models.CASCADE)
     workflow_summary = models.TextField()
     inventory_status = models.TextField()
